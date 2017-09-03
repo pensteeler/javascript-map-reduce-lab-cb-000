@@ -9000,3 +9000,46 @@ const issues = [
     "url": "https://api.github.com/repos/learn-co-curriculum/js-donut-lab/issues/2"
   }
 ];
+/*
+const coloredZebraStripes = zebraStripes.map((stripe, index) => {
+  const isEven = (index % 2) === 0;
+  return Object.assign({}, stripe, {
+    color: isEven ? 'black' : 'white'
+  });
+});
+*/
+/*
+const sortedRobots = robots.map(robot => {
+  const isDecepticon = knownDecepticons.includes(robot.name);
+  return Object.assign({}, robot, {
+    alliance: isDecepticon ? 'decepticon' : 'autobot'
+  });
+});
+*/
+
+//  Updating the API
+var issuesWithUpdatedApiUrl = issues.map( issue => {
+    var newUrl = issue.url.replace( 'api.github.com', 'api-v2.github.com')
+    return Object.assign({}, issue, {
+      url: newUrl
+    });
+});
+
+// Counting the comments
+var commentCountAcrossIssues = issues.map( issue => issue.comments_count)
+    .reduce( (comment_total, count) => comment_total + count, 0);
+
+// Filtering for Open Issues
+var openIssues = issues.filter( issue => {
+  return issue.state === "open";
+});
+
+// I'm not a robot
+var nonAutomaticIssues = issues.filter( issue => {
+  return !issue.body.includes("automatically created");
+});
+
+// Showing off
+document.querySelector('#results').innerHTML = nonAutomaticIssues.map( issue => {
+  return `<tr><td>${issue.body}</td><td>${issue.created_at}</td><td>${issue.state}</td></tr>`
+}).join('');
